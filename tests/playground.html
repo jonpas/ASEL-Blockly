@@ -55,6 +55,7 @@
 <script src="../generators/dart/variables_dynamic.js"></script>
 <script src="../generators/dart/procedures.js"></script>
 <script src="../msg/messages.js"></script>
+<script src="../blocks/asel.js"></script>
 <script src="../blocks/logic.js"></script>
 <script src="../blocks/loops.js"></script>
 <script src="../blocks/math.js"></script>
@@ -665,6 +666,21 @@ var spaghettiXml = [
   Variables category uses untyped variable blocks.
   See https://developers.google.com/blockly/guides/create-custom-blocks/variables#untyped_variable_blocks for more information. -->
   <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-categories" style="display: none">
+    <category name="ASEL" categorystyle="colour_category">
+      <block type="use"></block>
+      <block type="initialize"></block>
+      <block type="init_pin"></block>
+      <block type="page_handler"></block>
+      <block type="handle_arg"></block>
+      <block type="init_wifi"></block>
+      <block type="wifi_link"></block>
+      <block type="prepare"></block>
+      <block type="mode_pin"></block>
+      <block type="preproc_raw"></block>
+      <block type="preproc_ifdef"></block>
+      <block type="run"></block>
+      <block type="run_wifi"></block>
+    </category>
     <category name="Logic" categorystyle="logic_category">
       <block type="controls_if"></block>
       <block type="logic_compare"></block>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blockly Demo: Generating ASEL</title>
+  <script src="../../blockly_compressed.js"></script>
+  <script src="../../blocks_compressed.js"></script>
+  <script src="../../javascript_compressed.js"></script>
+  <script src="../../msg/js/en.js"></script>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+  </style>
+</head>
+<body>
+  <h1><a href="https://developers.google.com/blockly/">Blockly</a> &gt;
+    <a href="../index.html">Demos</a> &gt; Generating ASEL</h1>
+
+  <p>This is a simple demo of ASEL-Blockly featuring an example program <b>Remote Detonator</b>.</p>
+
+  <p>&rarr; More info on <a href="https://github.com/jonpas/ASEL">ASEL language</a>&hellip;</p>
+
+  <p>
+    <button onclick="showCode()">Show ASEL</button>
+    <button onclick="runCode()">Run ASEL</button>
+  </p>
+
+  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+
+  <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+    <category name="ASEL" colour="20">
+      <block type="use"></block>
+      <block type="initialize"></block>
+      <block type="init_pin"></block>
+      <block type="page_handler"></block>
+      <block type="handle_arg"></block>
+      <block type="init_wifi"></block>
+      <block type="wifi_link"></block>
+      <block type="prepare"></block>
+      <block type="mode_pin"></block>
+      <block type="preproc_raw"></block>
+      <block type="preproc_ifdef"></block>
+      <block type="run"></block>
+      <block type="run_wifi"></block>
+    </category>
+    <category name="Logic" colour="%{BKY_LOGIC_HUE}">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean"></block>
+      <block type="logic_null"></block>
+      <block type="logic_ternary"></block>
+    </category>
+    <category name="Loops" colour="%{BKY_LOOPS_HUE}">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="controls_whileUntil"></block>
+      <block type="controls_for">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+        <value name="BY">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="controls_forEach"></block>
+      <block type="controls_flow_statements"></block>
+    </category>
+    <category name="Math" colour="%{BKY_MATH_HUE}">
+      <block type="math_number">
+        <field name="NUM">123</field>
+      </block>
+      <block type="math_arithmetic">
+        <value name="A">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="B">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_single">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">9</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_trig">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">45</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constant"></block>
+      <block type="math_number_property">
+        <value name="NUMBER_TO_CHECK">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_round">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">3.1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_on_list"></block>
+      <block type="math_modulo">
+        <value name="DIVIDEND">
+          <shadow type="math_number">
+            <field name="NUM">64</field>
+          </shadow>
+        </value>
+        <value name="DIVISOR">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constrain">
+        <value name="VALUE">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="LOW">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="HIGH">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_int">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_float"></block>
+      <block type="math_atan2">
+        <value name="X">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="Y">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+    <category name="Text" colour="%{BKY_TEXTS_HUE}">
+      <block type="text"></block>
+      <block type="text_join"></block>
+      <block type="text_append">
+        <value name="TEXT">
+          <shadow type="text"></shadow>
+        </value>
+      </block>
+      <block type="text_length">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_isEmpty">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT"></field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_indexOf">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{textVariable}</field>
+          </block>
+        </value>
+        <value name="FIND">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_charAt">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{textVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_getSubstring">
+        <value name="STRING">
+          <block type="variables_get">
+            <field name="VAR">{textVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_changeCase">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_trim">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_print">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_prompt_ext">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+    <category name="Lists" colour="%{BKY_LISTS_HUE}">
+      <block type="lists_create_with">
+        <mutation items="0"></mutation>
+      </block>
+      <block type="lists_create_with"></block>
+      <block type="lists_repeat">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">5</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="lists_length"></block>
+      <block type="lists_isEmpty"></block>
+      <block type="lists_indexOf">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{listVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_getIndex">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{listVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_setIndex">
+        <value name="LIST">
+          <block type="variables_get">
+            <field name="VAR">{listVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_getSublist">
+        <value name="LIST">
+          <block type="variables_get">
+            <field name="VAR">{listVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_split">
+        <value name="DELIM">
+          <shadow type="text">
+            <field name="TEXT">,</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="lists_sort"></block>
+    </category>
+    <category name="Colour" colour="%{BKY_COLOUR_HUE}">
+      <block type="colour_picker"></block>
+      <block type="colour_random"></block>
+      <block type="colour_rgb">
+        <value name="RED">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+        <value name="GREEN">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="BLUE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="colour_blend">
+        <value name="COLOUR1">
+          <shadow type="colour_picker">
+            <field name="COLOUR">#ff0000</field>
+          </shadow>
+        </value>
+        <value name="COLOUR2">
+          <shadow type="colour_picker">
+            <field name="COLOUR">#3333ff</field>
+          </shadow>
+        </value>
+        <value name="RATIO">
+          <shadow type="math_number">
+            <field name="NUM">0.5</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+    <sep></sep>
+    <category name="Variables" colour="%{BKY_VARIABLES_HUE}" custom="VARIABLE"></category>
+    <category name="Functions" colour="%{BKY_PROCEDURES_HUE}" custom="PROCEDURE"></category>
+  </xml>
+
+  <xml xmlns="https://developers.google.com/blockly/xml" id="startBlocks">
+    <variables>
+      <variable id="l3y)rMSa9aqKU5)h+m7|">LED</variable>
+      <variable id="$qXhPe%e$wo:*oeCd/6}">detonate</variable>
+      <variable id="Z82owlHFF1],l+4~=w06">reset</variable>
+    </variables>
+    <block type="initialize" id="(9[ykOL:@m/HnUOl#_!%" x="288" y="88">
+      <statement name="CODE">
+        <block type="init_pin" id="8Oz~+8hrOORN}FSQHpiX">
+          <value name="NAME">
+            <block type="variables_get" id="xrB.dPR)qkaXIdHNQdf;">
+              <field name="VAR" id="l3y)rMSa9aqKU5)h+m7|">LED</field>
+            </block>
+          </value>
+          <value name="VALUE">
+            <block type="math_number" id="|F[Vns?E+0t7q;vfUO8Y">
+              <field name="NUM">5</field>
+            </block>
+          </value>
+          <next>
+            <block type="page_handler" id="Q$UfJ!nY9Y4sH8vd*:wU">
+              <value name="NAME">
+                <block type="variables_get" id="+^iWv31NKhbsA#+D6WEk">
+                  <field name="VAR" id="$qXhPe%e$wo:*oeCd/6}">detonate</field>
+                </block>
+              </value>
+              <statement name="CODE">
+                <block type="handle_arg" id="@5uNrC6_,D-qeDA*sE2R">
+                  <value name="NAME">
+                    <block type="text" id="N:E%TY*3?NDt7%iu@we$">
+                      <field name="TEXT">detonate</field>
+                    </block>
+                  </value>
+                  <statement name="CODE">
+                    <block type="mode_pin" id="{PhI[_:F-pXD,~+Z={?c">
+                      <field name="MODE">LOW</field>
+                      <value name="NAME">
+                        <block type="variables_get" id="}fa^4Y7wdxJ*L|kK=`/s">
+                          <field name="VAR" id="l3y)rMSa9aqKU5)h+m7|">LED</field>
+                        </block>
+                      </value>
+                    </block>
+                  </statement>
+                </block>
+              </statement>
+              <value name="RETURN">
+                <block type="text" id="d?bNmc(BUIw+(bJi~DQ~">
+                  <field name="TEXT">DETONATE</field>
+                </block>
+              </value>
+              <next>
+                <block type="page_handler" id="6t2HK@qnebA}MU5VXZT@">
+                  <value name="NAME">
+                    <block type="variables_get" id="muh~K2y+Z2`|Byxu1;=d">
+                      <field name="VAR" id="Z82owlHFF1],l+4~=w06">reset</field>
+                    </block>
+                  </value>
+                  <statement name="CODE">
+                    <block type="handle_arg" id="dP*@(MMLkfk}NAzd?A*8">
+                      <value name="NAME">
+                        <block type="text" id="9Cpfs@Hn6.,BL`a@4IpO">
+                          <field name="TEXT">reset</field>
+                        </block>
+                      </value>
+                      <statement name="CODE">
+                        <block type="mode_pin" id="dDj|:WG|-^g]=-3%~4y/">
+                          <field name="MODE">HIGH</field>
+                          <value name="NAME">
+                            <block type="variables_get" id="hMV(jZB^HZ4#`q+*sWRp">
+                              <field name="VAR" id="l3y)rMSa9aqKU5)h+m7|">LED</field>
+                            </block>
+                          </value>
+                        </block>
+                      </statement>
+                    </block>
+                  </statement>
+                  <value name="RETURN">
+                    <block type="text" id="w5x}j:Cn2G*6nyP=,9#~">
+                      <field name="TEXT">RESET</field>
+                    </block>
+                  </value>
+                  <next>
+                    <block type="init_wifi" id="%XSPvDXCcXlbgL#`h,-b">
+                      <value name="SSID">
+                        <block type="text" id="YLbt{T#1keSi?xHwuSXZ">
+                          <field name="TEXT">RemoteDetonator</field>
+                        </block>
+                      </value>
+                      <value name="PASSWORD">
+                        <block type="text" id="-)`z@0RqVP=;!r@Zj]hT">
+                          <field name="TEXT">remdettest</field>
+                        </block>
+                      </value>
+                      <value name="PAGE_FILE">
+                        <block type="text" id="WUT%k0~$bqkY+p=c2XL3">
+                          <field name="TEXT">page.html</field>
+                        </block>
+                      </value>
+                      <value name="STYLE_FILE">
+                        <block type="text" id="7=17D]hA_Mwx-GkeFj7X">
+                          <field name="TEXT">style.css</field>
+                        </block>
+                      </value>
+                      <statement name="BUTTONS">
+                        <block type="wifi_link" id="4jRmvyjE?;FRANqY;0#f">
+                          <value name="NAME">
+                            <block type="text" id=";F[8DHs|vt.%i*yY:{uk">
+                              <field name="TEXT">DETONATE</field>
+                            </block>
+                          </value>
+                          <value name="PAGE_HANDLER">
+                            <block type="variables_get" id="=)T`~XB((f7qU0PZr4)E">
+                              <field name="VAR" id="$qXhPe%e$wo:*oeCd/6}">detonate</field>
+                            </block>
+                          </value>
+                          <next>
+                            <block type="wifi_link" id="=;C0b//-BbRBF8s]wO?*">
+                              <value name="NAME">
+                                <block type="text" id="RXNi[)aYo,|a7dvD)X*e">
+                                  <field name="TEXT">RESET</field>
+                                </block>
+                              </value>
+                              <value name="PAGE_HANDLER">
+                                <block type="variables_get" id="dOY*C~vXUX8v8.bx,Rs3">
+                                  <field name="VAR" id="Z82owlHFF1],l+4~=w06">reset</field>
+                                </block>
+                              </value>
+                            </block>
+                          </next>
+                        </block>
+                      </statement>
+                    </block>
+                  </next>
+                </block>
+              </next>
+            </block>
+          </next>
+        </block>
+      </statement>
+      <next>
+        <block type="prepare" id="n4Zg_vRAYYPiRe/tqPY7">
+          <statement name="CODE">
+            <block type="mode_pin" id="2o4Qj{2A_trM0k`+[C.c">
+              <field name="MODE">MODE_OUT</field>
+              <value name="NAME">
+                <block type="variables_get" id="1y$1wWUqG^4h`U%Et+F0">
+                  <field name="VAR" id="l3y)rMSa9aqKU5)h+m7|">LED</field>
+                </block>
+              </value>
+              <next>
+                <block type="mode_pin" id="4ye,IYDwGFmRm,Ou]C6%">
+                  <field name="MODE">HIGH</field>
+                  <value name="NAME">
+                    <block type="variables_get" id="K7=T:6~2qqcZl{eo*,3M">
+                      <field name="VAR" id="l3y)rMSa9aqKU5)h+m7|">LED</field>
+                    </block>
+                  </value>
+                </block>
+              </next>
+            </block>
+          </statement>
+          <next>
+            <block type="run" id="yD}v1e{;s,4,qG1];X^,">
+              <statement name="CODE">
+                <block type="run_wifi" id="ChNq{l/BpgX?JD7^-]k.">
+                  <field name="NAME">TRUE</field>
+                </block>
+              </statement>
+            </block>
+          </next>
+        </block>
+      </next>
+    </block>
+  </xml>
+
+  <script>
+    var demoWorkspace = Blockly.inject('blocklyDiv',
+        {media: '../../media/',
+         toolbox: document.getElementById('toolbox')});
+    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
+                               demoWorkspace);
+
+    function showCode() {
+      // Generate JavaScript code and display it.
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      alert(code);
+    }
+
+    function runCode() {
+      // Generate JavaScript code and run it.
+      window.LoopTrap = 1000;
+      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+      var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      try {
+        eval(code);
+      } catch (e) {
+        alert(e);
+      }
+    }
+  </script>
+
+</body>
+</html>
