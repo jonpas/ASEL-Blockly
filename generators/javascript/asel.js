@@ -27,7 +27,7 @@ goog.require('Blockly.JavaScript');
 Blockly.JavaScript['use'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   // Assemble ASEL into code variable.
-  var code = 'use "' + value_name + '"\n';
+  var code = 'use ' + value_name + '\n';
   return code;
 };
 
