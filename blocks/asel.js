@@ -16,13 +16,13 @@
  */
 
 /**
- * @fileoverview Colour blocks for Blockly.
+ * @fileoverview ASEL blocks for Blockly.
  *
  * This file is scraped to extract a .json file of block definitions. The array
  * passed to defineBlocksWithJsonArray(..) must be strict JSON: double quotes
  * only, no outside references, no functions, no trailing commas, etc. The one
  * exception is end-of-line comments, which the scraper will remove.
- * @author fraser@google.com (Neil Fraser)
+ * @author jonpas33@gmail.com (Jonpas)
  */
 'use strict';
 
@@ -239,19 +239,19 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
         "options": [
           [
             "out",
-            "MODE_OUT"
+            "out"
           ],
           [
             "in",
-            "MODE_IN"
+            "in"
           ],
           [
             "on",
-            "HIGH"
+            "on"
           ],
           [
             "off",
-            "LOW"
+            "off"
           ]
         ]
       },
@@ -343,5 +343,5 @@ Blockly.defineBlocksWithJsonArray([  // BEGIN JSON EXTRACT
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
-  }
+  },
 ]);  // END JSON EXTRACT (Do not delete this comment.)

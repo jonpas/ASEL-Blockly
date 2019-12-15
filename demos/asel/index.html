@@ -28,10 +28,9 @@
 
   <p>
     <button onclick="showCode()">Show ASEL</button>
-    <button onclick="runCode()">Run ASEL</button>
   </p>
 
-  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+  <div id="blocklyDiv" style="height: 800px; width: 800px;"></div>
 
   <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
     <category name="ASEL" colour="20">
@@ -365,7 +364,7 @@
       <variable id="$qXhPe%e$wo:*oeCd/6}">detonate</variable>
       <variable id="Z82owlHFF1],l+4~=w06">reset</variable>
     </variables>
-    <block type="initialize" id="(9[ykOL:@m/HnUOl#_!%" x="288" y="88">
+    <block type="initialize" id="(9[ykOL:@m/HnUOl#_!%" x="20" y="20">
       <statement name="CODE">
         <block type="init_pin" id="8Oz~+8hrOORN}FSQHpiX">
           <value name="NAME">
@@ -394,7 +393,7 @@
                   </value>
                   <statement name="CODE">
                     <block type="mode_pin" id="{PhI[_:F-pXD,~+Z={?c">
-                      <field name="MODE">LOW</field>
+                      <field name="MODE">off</field>
                       <value name="NAME">
                         <block type="variables_get" id="}fa^4Y7wdxJ*L|kK=`/s">
                           <field name="VAR" id="l3y)rMSa9aqKU5)h+m7|">LED</field>
@@ -425,7 +424,7 @@
                       </value>
                       <statement name="CODE">
                         <block type="mode_pin" id="dDj|:WG|-^g]=-3%~4y/">
-                          <field name="MODE">HIGH</field>
+                          <field name="MODE">on</field>
                           <value name="NAME">
                             <block type="variables_get" id="hMV(jZB^HZ4#`q+*sWRp">
                               <field name="VAR" id="l3y)rMSa9aqKU5)h+m7|">LED</field>
@@ -502,7 +501,7 @@
         <block type="prepare" id="n4Zg_vRAYYPiRe/tqPY7">
           <statement name="CODE">
             <block type="mode_pin" id="2o4Qj{2A_trM0k`+[C.c">
-              <field name="MODE">MODE_OUT</field>
+              <field name="MODE">out</field>
               <value name="NAME">
                 <block type="variables_get" id="1y$1wWUqG^4h`U%Et+F0">
                   <field name="VAR" id="l3y)rMSa9aqKU5)h+m7|">LED</field>
@@ -510,7 +509,7 @@
               </value>
               <next>
                 <block type="mode_pin" id="4ye,IYDwGFmRm,Ou]C6%">
-                  <field name="MODE">HIGH</field>
+                  <field name="MODE">on</field>
                   <value name="NAME">
                     <block type="variables_get" id="K7=T:6~2qqcZl{eo*,3M">
                       <field name="VAR" id="l3y)rMSa9aqKU5)h+m7|">LED</field>
@@ -546,20 +545,6 @@
       Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
       var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
       alert(code);
-    }
-
-    function runCode() {
-      // Generate JavaScript code and run it.
-      window.LoopTrap = 1000;
-      Blockly.JavaScript.INFINITE_LOOP_TRAP =
-          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-      var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
-      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-      try {
-        eval(code);
-      } catch (e) {
-        alert(e);
-      }
     }
   </script>
 

@@ -16,8 +16,8 @@
  */
 
 /**
- * @fileoverview Generating JavaScript for colour blocks.
- * @author fraser@google.com (Neil Fraser)
+ * @fileoverview Generating ASEL code for ASEL blocks.
+ * @author jonpas33@gmail.com (Jonpas)
  */
 'use strict';
 
@@ -26,23 +26,23 @@ goog.require('Blockly.JavaScript');
 
 Blockly.JavaScript['use'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'use\n';
+  // Assemble ASEL into code variable.
+  var code = 'use "' + value_name + '"\n';
   return code;
 };
 
 Blockly.JavaScript['initialize'] = function(block) {
   var statements_code = Blockly.JavaScript.statementToCode(block, 'CODE');
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'initialize\n';
+  // Assemble ASEL into code variable.
+  var code = 'init {\n' + statements_code + '}\n\n';
   return code;
 };
 
 Blockly.JavaScript['init_pin'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'init_pin\n';
+  // Assemble ASEL into code variable.
+  var code = 'pin ' + value_name + ' = ' + value_value + '\n';
   return code;
 };
 
@@ -50,16 +50,16 @@ Blockly.JavaScript['page_handler'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   var statements_code = Blockly.JavaScript.statementToCode(block, 'CODE');
   var value_return = Blockly.JavaScript.valueToCode(block, 'RETURN', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'page_handler\n';
+  // Assemble ASEL into code variable.
+  var code = '\npagehandle ' + value_name + ' {\n' + statements_code + '  -> ' + value_return + '\n}\n';
   return code;
 };
 
 Blockly.JavaScript['handle_arg'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   var statements_code = Blockly.JavaScript.statementToCode(block, 'CODE');
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'handle_arg\n';
+  // Assemble ASEL into code variable.
+  var code = 'handle ' + value_name + ' {\n' + statements_code + '}\n';
   return code;
 };
 
@@ -69,59 +69,64 @@ Blockly.JavaScript['init_wifi'] = function(block) {
   var value_page_file = Blockly.JavaScript.valueToCode(block, 'PAGE_FILE', Blockly.JavaScript.ORDER_ATOMIC);
   var value_style_file = Blockly.JavaScript.valueToCode(block, 'STYLE_FILE', Blockly.JavaScript.ORDER_ATOMIC);
   var statements_buttons = Blockly.JavaScript.statementToCode(block, 'BUTTONS');
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'init_wifi\n';
+  // Assemble ASEL into code variable.
+  var code = '\nwifi ' + value_ssid + ' ' + value_password + ' ' + value_page_file + ' ' + value_style_file + ' {\n' + statements_buttons + '}\n';
   return code;
 };
 
 Blockly.JavaScript['wifi_link'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   var value_page_handler = Blockly.JavaScript.valueToCode(block, 'PAGE_HANDLER', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'wifi_link\n';
+  // Assemble ASEL into code variable.
+  var code = value_name + ' -> ' + value_page_handler + '\n';
   return code;
 };
 
 Blockly.JavaScript['prepare'] = function(block) {
   var statements_code = Blockly.JavaScript.statementToCode(block, 'CODE');
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'prepare\n';
+  // Assemble ASEL into code variable.
+  var code = 'prepare {\n' + statements_code + '}\n\n';
   return code;
 };
 
 Blockly.JavaScript['mode_pin'] = function(block) {
   var dropdown_mode = block.getFieldValue('MODE');
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'mode_pin\n';
+  // Assemble ASEL into code variable.
+  var code = '' + dropdown_mode + '|';
+  if (['out', 'in'].includes(dropdown_mode)) {
+    code = dropdown_mode + ' ' + value_name + '\n';
+  } else if (['on', 'off'].includes(dropdown_mode)) {
+    code = value_name + ' = ' + dropdown_mode + '\n';
+  }
   return code;
 };
 
 Blockly.JavaScript['preproc_raw'] = function(block) {
   var value_code = Blockly.JavaScript.valueToCode(block, 'CODE', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'preproc_raw\n';
+  // Assemble ASEL into code variable.
+  var code = 'raw {\n' + value_code + '}\n';
   return code;
 };
 
 Blockly.JavaScript['preproc_ifdef'] = function(block) {
   var value_condition = Blockly.JavaScript.valueToCode(block, 'CONDITION', Blockly.JavaScript.ORDER_ATOMIC);
   var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'preproc_ifdef\n';
+  // Assemble ASEL into code variable.
+  var code = 'ifdef ' + value_condition + ' {\n' + statements_name + '}\n';
   return code;
 };
 
 Blockly.JavaScript['run'] = function(block) {
   var statements_code = Blockly.JavaScript.statementToCode(block, 'CODE');
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'run\n';
+  // Assemble ASEL into code variable.
+  var code = 'run {\n' + statements_code + '}\n';
   return code;
 };
 
 Blockly.JavaScript['run_wifi'] = function(block) {
   var checkbox_name = block.getFieldValue('NAME') == 'TRUE';
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'run_wifi\n';
+  // Assemble ASEL into code variable.
+  var code = 'wifi\n';
   return code;
 };

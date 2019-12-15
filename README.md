@@ -7,8 +7,7 @@
 Google's Blockly is a web-based, visual programming editor. Users can drag
 blocks together to build programs. All code is free and open source. This is a fork of [Blockly](https://github.com/google/blockly).
 
-
-This projects adds support for ASEL to Blockly, with _most_ language concepts that are also available in the ASEL text language. **Generation is not supported**, only simple JavaScript generation with names of blocks is prepared.
+This projects adds support for ASEL to Blockly, with _most_ language concepts that are also available in the ASEL text language. Generation is partially supported through JavaScript generator.
 
 
 ### Branches
